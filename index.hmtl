@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FrozenMC Launcher</title>
+  <style>
+    :root {
+      --bg-dark: #0a1128;
+      --panel-bg: rgba(13, 27, 42, 0.85);
+      --accent-blue: #00b4d8;
+      --glow-ice: #90e0ef;
+      --text-main: #f0f8ff;
+      --border-ice: rgba(144, 224, 239, 0.3);
+      --btn-green: #2e7d32;
+      --btn-green-hover: #388e3c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 180, 216, 0.2), transparent 70%),
+        linear-gradient(180deg, rgba(10, 17, 40, 0.95), rgba(5, 10, 25, 0.98));
+      color: var(--text-main);
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* Sidebar - Minecraft Launcher Style */
+    .sidebar {
+      width: 260px;
+      background: var(--panel-bg);
+      border-right: 1px solid var(--border-ice);
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+
+    .brand {
+      padding: 0 20px 20px 20px;
+      border-bottom: 1px solid var(--border-ice);
+      text-align: center;
+    }
+
+    .brand h1 {
+      font-size: 22px;
+      color: #ffffff;
+      text-shadow: 0 0 10px var(--glow-ice);
+      letter-spacing: 1px;
+    }
+
+    .brand p {
+      font-size: 11px;
+      color: var(--accent-blue);
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+
+    .nav-list {
+      list-style: none;
+      margin-top: 20px;
+    }
+
+    .nav-item {
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #a0aec0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-left: 4px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: rgba(0, 180, 216, 0.1);
+      color: #fff;
+    }
+
+    .nav-item.active {
+      background: rgba(0, 180, 216, 0.18);
+      color: #fff;
+      border-left-color: var(--glow-ice);
+      font-weight: 600;
+    }
+
+    /* Main Section */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .game-view {
+      flex: 1;
+      position: relative;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: none;
+    }
+
+    iframe.active {
+      display: block;
+    }
+
+    .placeholder-banner {
+      position: absolute;
+      text-align: center;
+      color: var(--glow-ice);
+    }
+
+    .placeholder-banner h2 {
+      font-size: 32px;
+      margin-bottom: 8px;
+      text-shadow: 0 0 12px var(--glow-ice);
+    }
+
+    /* Bottom Control Bar - Launch Controls */
+    .bottom-bar {
+      height: 90px;
+      background: rgba(8, 15, 30, 0.95);
+      border-top: 1px solid var(--border-ice);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .selector-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .selector-container label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    select {
+      background: #0d1b2a;
+      color: #fff;
+      border: 1px solid var(--border-ice);
+      padding: 10px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      outline: none;
+      cursor: pointer;
+      min-width: 220px;
+      transition: border-color 0.2s;
+    }
+
+    select:focus {
+      border-color: var(--glow-ice);
+      box-shadow: 0 0 8px var(--border-ice);
+    }
+
+    .play-btn {
+      background: linear-gradient(180deg, #388e3c 0%, #1b5e20 100%);
+      color: #fff;
+      border: 1px solid #4caf50;
+      padding: 14px 60px;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      box-shadow: 0 4px 15px rgba(46, 125, 50, 0.4);
+      transition: all 0.15s ease;
+    }
+
+    .play-btn:hover {
+      background: linear-gradient(180deg, #43a047 0%, #2e7d32 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5);
+    }
+
+    .play-btn:active {
+      transform: translateY(1px);
+    }
+
+    .status-badge {
+      font-size: 12px;
+      color: #a0aec0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #00e676;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #00e676;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <div class="brand">
+      <h1>FROZEN MC</h1>
+      <p>Unblocked Launcher</p>
+    </div>
+    <ul class="nav-list">
+      <li class="nav-item active">🎮 Play</li>
+      <li class="nav-item">⚙️ Settings</li>
+      <li class="nav-item">🌐 Server Info</li>
+    </ul>
+  </div>
+
+  <!-- Main Game Display -->
+  <div class="main-content">
+    <div class="game-view" id="gameView">
+      <div class="placeholder-banner" id="placeholder">
+        <h2>FROZEN NETWORK</h2>
+        <p>Select your client version below and click PLAY</p>
+      </div>
+      <iframe id="gameFrame" src="" allowfullscreen></iframe>
+    </div>
+
+    <!-- Bottom Launch Control Panel -->
+    <div class="bottom-bar">
+      <div class="selector-container">
+        <label for="clientSelect">Client & Version</label>
+        <select id="clientSelect">
+          <option value="https://client.eaglercraft.win/">Eaglercraft 1.8.8 (Official)</option>
+          <option value="https://eaglercraft.ir/downloads/">Tuff Client 1.12.2</option>
+          <option value="https://eaglercraft.ir/downloads/">Pixel Client 1.12.2</option>
+          <option value="https://client.eaglercraft.win/">Eaglercraft 1.12.2</option>
+          <option value="https://client.eaglercraft.win/">Eaglercraft 1.5.2 (Classic)</option>
+        </select>
+      </div>
+
+      <button class="play-btn" onclick="launchGame()">PLAY</button>
+
+      <div class="status-badge">
+        <div class="status-dot"></div>
+        Ready to Launch
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function launchGame() {
+      const select = document.getElementById('clientSelect');
+      const frame = document.getElementById('gameFrame');
+      const placeholder = document.getElementById('placeholder');
+
+      const selectedUrl = select.value;
+
+      if (selectedUrl) {
+        placeholder.style.display = 'none';
+        frame.src = selectedUrl;
+        frame.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>
