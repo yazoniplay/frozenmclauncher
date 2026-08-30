@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Pixel Client",
+    "version": "1.8.8",
+    "url": "https://pixelclient-multi-download.vercel.app"
+  },
+  {
+    "name": "Tuff Client",
+    "version": "1.8.8",
+    "url": "https://tuff-client-offline-wasm-2.vercel.app"
+  }
+]
