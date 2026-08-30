@@ -7,31 +7,49 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabContents = document.querySelectorAll('.tab-content');
   const selectedVersionText = document.getElementById('selected-version-text');
 
-  // 1. Fetch available clients from clients.json
+  // Fetch clients from clients.json dynamically
   async function loadClients() {
     try {
       const response = await fetch('clients.json');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       const clients = await response.json();
-      
-      clientSelect.innerHTML = ''; // Clear options
+      clientSelect.innerHTML = ''; // Clear existing loading options
+
+      if (!clients || clients.length === 0) {
+        clientSelect.innerHTML = '<option value="">No clients found</option>';
+        return;
+      }
 
       clients.forEach((client, index) => {
         const option = document.createElement('option');
-        option.value = client.url;
-        option.textContent = `${client.name} (${client.version})`;
-        option.dataset.version = client.version;
+        // Clean up URL whitespace
+        option.value = client.url ? client.url.trim() : '';
+        option.textContent = `${client.name} (${client.version || '1.12.2'})`;
         if (index === 0) option.selected = true;
         clientSelect.appendChild(option);
       });
 
       updateVersionText();
     } catch (error) {
-      console.error('Failed to load clients.json:', error);
-      clientSelect.innerHTML = '<option value="">Error loading clients</option>';
+      console.error('Error loading clients.json:', error);
+      clientSelect.innerHTML = '<option value="">Failed to load clients.json</option>';
     }
   }
 
-  // 2. Tab Navigation logic
+  // Update display text when client dropdown changes
+  function updateVersionText() {
+    const selectedOption = clientSelect.options[clientSelect.selectedIndex];
+    if (selectedOption && selectedVersionText) {
+      selectedVersionText.textContent = selectedOption.textContent;
+    }
+  }
+
+  clientSelect.addEventListener('change', updateVersionText);
+
+  // Tab Navigation Handling
   navButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const targetTab = btn.dataset.tab;
@@ -40,36 +58,39 @@ document.addEventListener('DOMContentLoaded', () => {
       tabContents.forEach(c => c.classList.remove('active'));
 
       btn.classList.add('active');
-      document.getElementById(`${targetTab}-view`).classList.add('active');
+      const targetElement = document.getElementById(`${targetTab}-view`);
+      if (targetElement) {
+        targetElement.classList.add('active');
+      }
     });
   });
 
-  // 3. Update Label when selection changes
-  function updateVersionText() {
-    const selectedOption = clientSelect.options[clientSelect.selectedIndex];
-    if (selectedOption) {
-      selectedVersionText.textContent = selectedOption.textContent;
-    }
-  }
-
-  clientSelect.addEventListener('change', updateVersionText);
-
-  // 4. Launch Game Frame
+  // Launch Button Logic
   playBtn.addEventListener('click', () => {
-    const selectedUrl = clientSelect.value;
+    const rawUrl = clientSelect.value;
 
-    if (selectedUrl) {
-      placeholder.style.display = 'none';
-      gameFrame.src = selectedUrl;
+    if (!rawUrl) {
+      alert('Please select a valid client version first!');
+      return;
+    }
 
-      // Optional Auto-Fullscreen setting check
-      const autoFullscreen = document.getElementById('auto-fullscreen').checked;
-      if (autoFullscreen && gameFrame.requestFullscreen) {
-        gameFrame.requestFullscreen();
-      }
+    const targetUrl = rawUrl.trim();
+
+    // Hide placeholder overlay and set iframe source
+    if (placeholder) placeholder.style.display = 'none';
+    
+    gameFrame.style.display = 'block';
+    gameFrame.src = targetUrl;
+
+    // Check optional auto-fullscreen toggle
+    const autoFullscreen = document.getElementById('auto-fullscreen');
+    if (autoFullscreen && autoFullscreen.checked && gameFrame.requestFullscreen) {
+      gameFrame.requestFullscreen().catch(err => {
+        console.warn('Fullscreen request blocked by browser policy:', err);
+      });
     }
   });
 
-  // Initialize
+  // Initialize client loading
   loadClients();
 });
