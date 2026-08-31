@@ -2,21 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FrozenMC Eaglercraft Launcher</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FrozenMC Launcher</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="assets/frozen_logo.png">
 </head>
 <body>
 
-  <!-- Launcher Sidebar -->
+  <!-- Left Sidebar Navigation -->
   <aside class="sidebar">
     <div class="brand">
-      <div class="logo-box">
-        <span class="ice-icon">❄️</span>
-      </div>
       <h2>FROZEN NETWORK</h2>
-      <p>Unblocked Web Launcher</p>
+      <p>UNBLOCKED WEB LAUNCHER</p>
     </div>
 
     <nav class="nav-menu">
@@ -26,39 +22,39 @@
     </nav>
 
     <div class="sidebar-footer">
-      <p>Status: <span class="status-online">Online</span></p>
+      <p>Status: <span class="status-online">● Online</span></p>
+      <p style="margin-top: 4px;">Version: 1.12.2</p>
     </div>
   </aside>
 
-  <!-- Main View Area -->
+  <!-- Main Content Area -->
   <main class="main-content">
     
     <!-- Play View -->
     <section id="play-view" class="tab-content active">
       <div class="game-container">
-        <div id="placeholder" class="placeholder-overlay">
+        <div class="placeholder-overlay">
           <div class="hero-text">
             <h1>FROZEN MC</h1>
-            <p>Select your preferred Eaglercraft client and hit <strong>PLAY</strong> to launch into web-Minecraft.</p>
+            <p>Select your preferred client version below and hit <strong>PLAY</strong> to launch into web-Minecraft in a new tab.</p>
           </div>
         </div>
-        <iframe id="game-frame" src="" allowfullscreen></iframe>
       </div>
 
-      <!-- Bottom Minecraft Launcher Controls -->
+      <!-- Bottom Launcher Bar -->
       <footer class="launcher-controls">
         <div class="control-group">
-          <label for="client-select">SELECT CLIENT & VERSION</label>
+          <label for="client-select">SELECT CLIENT VERSION</label>
           <select id="client-select">
-            <option value="" disabled selected>Loading available clients...</option>
+            <option value="">Loading client list...</option>
           </select>
         </div>
 
         <button id="play-btn" class="btn-play">PLAY</button>
 
         <div class="version-info">
-          <span id="selected-version-text">Eaglercraft 1.8.8</span>
-          <span class="badge-ready">Ready to Launch</span>
+          <span>Ready to Launch</span>
+          <span class="badge-ready">● 1.12.2 Active</span>
         </div>
       </footer>
     </section>
@@ -66,10 +62,21 @@
     <!-- Servers View -->
     <section id="servers-view" class="tab-content">
       <div class="card">
-        <h2>FrozenMC Server</h2>
-        <p>Connect directly using your Eaglercraft 1.8.8 / 1.12.2 client:</p>
-        <div class="ip-box">
-          <code>wss://play.frozenmc.net/eagler</code>
+        <h2>FrozenMC Network</h2>
+        <p>Connect using your web client with these server addresses:</p>
+
+        <div style="margin-top: 18px;">
+          <label style="color: var(--ice-blue); font-weight: bold; font-size: 11px; letter-spacing: 1px;">EAGLERCRAFT WEB SOCKET IP</label>
+          <div>
+            <span class="ip-box">wss://eagler.frozenmc.org</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 18px;">
+          <label style="color: var(--ice-blue); font-weight: bold; font-size: 11px; letter-spacing: 1px;">JAVA EDITION IP</label>
+          <div>
+            <span class="ip-box">play.frozenmc.org</span>
+          </div>
         </div>
       </div>
     </section>
@@ -78,10 +85,14 @@
     <section id="settings-view" class="tab-content">
       <div class="card">
         <h2>Launcher Settings</h2>
-        <label class="toggle-container">
-          <span>Fullscreen on Launch</span>
-          <input type="checkbox" id="auto-fullscreen">
-        </label>
+        <p>Customize your experience below.</p>
+
+        <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px;">
+          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--text-primary); font-size: 14px;">
+            <input type="checkbox" id="auto-fullscreen" style="width: 18px; height: 18px; accent-color: var(--ice-blue);">
+            Auto Fullscreen on Launch
+          </label>
+        </div>
       </div>
     </section>
 
