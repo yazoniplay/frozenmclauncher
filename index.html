@@ -27,7 +27,7 @@
       background-color: #181818;
       display: flex;
       align-items: center;
-      padding: 0 10px;
+      padding: 0 12px;
       font-size: 12px;
       color: #cccccc;
       border-bottom: 1px solid #282828;
@@ -73,9 +73,6 @@
       font-size: 13px;
       color: #aaaaaa;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
 
     .nav-item:hover {
@@ -113,7 +110,6 @@
       font-weight: 600;
       color: #888888;
       cursor: pointer;
-      padding-bottom: 5px;
     }
 
     .sub-nav-item.active {
@@ -121,30 +117,28 @@
       border-bottom: 2px solid #09add3;
     }
 
-    /* Hero Banner / Background View */
+    /* Hero Banner with bg.jpg */
     .hero-container {
       flex: 1;
       position: relative;
-      /* Replace 'bg.png' with your artwork background */
-      background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('bg.png') center/cover no-repeat;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7)), url('bg.jpg') center/cover no-repeat;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      padding: 40px 0 20px 0;
+      justify-content: center;
     }
 
     /* FrozenMC Logo Overlay */
     .logo-container {
-      width: 60%;
-      max-width: 500px;
+      width: 55%;
+      max-width: 480px;
       text-align: center;
     }
 
     .logo-container img {
       width: 100%;
       height: auto;
-      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));
+      filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.8));
     }
 
     /* Bottom Play Control Bar */
@@ -159,25 +153,36 @@
       padding: 0 30px;
     }
 
-    /* Profile / Version Dropdown Selector */
-    .version-selector {
+    /* Client Selector Dropdown Box */
+    .client-selector-box {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .client-label {
+      font-size: 11px;
+      color: #888888;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .client-select {
       width: 220px;
       background-color: #262626;
       border: 1px solid #3a3a3a;
+      color: #ffffff;
       border-radius: 4px;
-      padding: 8px 12px;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      outline: none;
       cursor: pointer;
     }
 
-    .version-title {
-      font-size: 13px;
-      font-weight: bold;
+    .client-select option {
+      background-color: #1f1f1f;
       color: #ffffff;
-    }
-
-    .version-sub {
-      font-size: 11px;
-      color: #888888;
     }
 
     /* Green Launcher Play Button */
@@ -215,7 +220,7 @@
 
   <!-- Top Title Bar -->
   <div class="title-bar">
-    Minecraft Launcher - FrozenMC
+    FrozenMC Client Launcher
   </div>
 
   <div class="container">
@@ -225,9 +230,7 @@
         <div class="avatar"></div>
         <span>Player</span>
       </div>
-      <div class="nav-item">News</div>
-      <div class="nav-item active">FrozenMC Java</div>
-      <div class="nav-item">Modpacks</div>
+      <div class="nav-item active">Play</div>
       <div class="nav-item">Settings</div>
     </div>
 
@@ -236,37 +239,51 @@
       <!-- Top Navigation Tabs -->
       <div class="sub-nav">
         <div class="sub-nav-item active">Play</div>
-        <div class="sub-nav-item">Installations</div>
-        <div class="sub-nav-item">Skins</div>
-        <div class="sub-nav-item">Patch Notes</div>
+        <div class="sub-nav-item">Clients</div>
+        <div class="sub-nav-item">News</div>
       </div>
 
-      <!-- Hero View with Logo Overlay -->
+      <!-- Hero View using bg.jpg and logo -->
       <div class="hero-container">
         <div class="logo-container">
-          <!-- Insert the FrozenMC Logo -->
           <img src="frozenmc-logo.png" alt="FrozenMC Logo">
         </div>
       </div>
 
       <!-- Play Control Bar -->
       <div class="play-bar">
-        <!-- Version Selector Box -->
-        <div class="version-selector">
-          <div class="version-title">FrozenMC 1.21</div>
-          <div class="version-sub">Latest release</div>
+        <!-- Client Selector Dropdown -->
+        <div class="client-selector-box">
+          <span class="client-label">Select Web Client:</span>
+          <select id="clientSelect" class="client-select">
+            <option value="tuff">TuffClient</option>
+            <option value="pixel">Pixel Client</option>
+          </select>
         </div>
 
         <!-- Green Play Button -->
-        <button class="play-btn">PLAY</button>
+        <button class="play-btn" onclick="launchGame()">PLAY</button>
 
-        <!-- Extra Info Slot -->
         <div class="version-info">
-          v1.0.0-Frozen
+          FrozenMC v1.0
         </div>
       </div>
     </div>
   </div>
+
+  <script>
+    function launchGame() {
+      const selectedClient = document.getElementById('clientSelect').value;
+      
+      if (selectedClient === 'tuff') {
+        // Point to your TuffClient HTML file or path
+        window.location.href = 'tuffclient.html';
+      } else if (selectedClient === 'pixel') {
+        // Point to your Pixel Client HTML file or path
+        window.location.href = 'pixelclient.html';
+      }
+    }
+  </script>
 
 </body>
 </html>
