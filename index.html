@@ -2,102 +2,271 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>FrozenMC Launcher</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Top Title Bar */
+    .title-bar {
+      height: 32px;
+      background-color: #181818;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      font-size: 12px;
+      color: #cccccc;
+      border-bottom: 1px solid #282828;
+    }
+
+    /* Main Window Layout */
+    .container {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 32px);
+    }
+
+    /* Left Sidebar Navigation */
+    .sidebar {
+      width: 200px;
+      background-color: #1f1f1f;
+      display: flex;
+      flex-direction: column;
+      padding-top: 10px;
+      border-right: 1px solid #2a2a2a;
+    }
+
+    .profile-section {
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: bold;
+      border-bottom: 1px solid #2a2a2a;
+      margin-bottom: 10px;
+    }
+
+    .avatar {
+      width: 24px;
+      height: 24px;
+      background-color: #09add3;
+      border-radius: 3px;
+    }
+
+    .nav-item {
+      padding: 10px 15px;
+      font-size: 13px;
+      color: #aaaaaa;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-item:hover {
+      background-color: #2a2a2a;
+      color: #ffffff;
+    }
+
+    .nav-item.active {
+      background-color: #2d2d2d;
+      color: #ffffff;
+      border-left: 4px solid #09add3;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: #181818;
+      position: relative;
+    }
+
+    /* Top Horizontal Sub-Nav */
+    .sub-nav {
+      height: 45px;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      padding: 0 25px;
+      background-color: #181818;
+    }
+
+    .sub-nav-item {
+      font-size: 13px;
+      font-weight: 600;
+      color: #888888;
+      cursor: pointer;
+      padding-bottom: 5px;
+    }
+
+    .sub-nav-item.active {
+      color: #ffffff;
+      border-bottom: 2px solid #09add3;
+    }
+
+    /* Hero Banner / Background View */
+    .hero-container {
+      flex: 1;
+      position: relative;
+      /* Replace 'bg.png' with your artwork background */
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.6)), url('bg.png') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px 0 20px 0;
+    }
+
+    /* FrozenMC Logo Overlay */
+    .logo-container {
+      width: 60%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .logo-container img {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));
+    }
+
+    /* Bottom Play Control Bar */
+    .play-bar {
+      width: 100%;
+      height: 100px;
+      background: rgba(24, 24, 24, 0.95);
+      border-top: 1px solid #2a2a2a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+
+    /* Profile / Version Dropdown Selector */
+    .version-selector {
+      width: 220px;
+      background-color: #262626;
+      border: 1px solid #3a3a3a;
+      border-radius: 4px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .version-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .version-sub {
+      font-size: 11px;
+      color: #888888;
+    }
+
+    /* Green Launcher Play Button */
+    .play-btn {
+      width: 200px;
+      height: 52px;
+      background-color: #388e3c;
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #1b5e20;
+      transition: background 0.1s ease;
+    }
+
+    .play-btn:hover {
+      background-color: #43a047;
+    }
+
+    .play-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #1b5e20;
+    }
+
+    .version-info {
+      font-size: 11px;
+      color: #666666;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Left Sidebar Navigation -->
-  <aside class="sidebar">
-    <div class="brand">
-      <h2>FROZEN NETWORK</h2>
-      <p>UNBLOCKED WEB LAUNCHER</p>
+  <!-- Top Title Bar -->
+  <div class="title-bar">
+    Minecraft Launcher - FrozenMC
+  </div>
+
+  <div class="container">
+    <!-- Left Navigation Bar -->
+    <div class="sidebar">
+      <div class="profile-section">
+        <div class="avatar"></div>
+        <span>Player</span>
+      </div>
+      <div class="nav-item">News</div>
+      <div class="nav-item active">FrozenMC Java</div>
+      <div class="nav-item">Modpacks</div>
+      <div class="nav-item">Settings</div>
     </div>
 
-    <nav class="nav-menu">
-      <button class="nav-btn active" data-tab="play">🎮 Play</button>
-      <button class="nav-btn" data-tab="servers">🌐 Servers</button>
-      <button class="nav-btn" data-tab="settings">⚙️ Settings</button>
-    </nav>
+    <!-- Main View -->
+    <div class="main-content">
+      <!-- Top Navigation Tabs -->
+      <div class="sub-nav">
+        <div class="sub-nav-item active">Play</div>
+        <div class="sub-nav-item">Installations</div>
+        <div class="sub-nav-item">Skins</div>
+        <div class="sub-nav-item">Patch Notes</div>
+      </div>
 
-    <div class="sidebar-footer">
-      <p>Status: <span class="status-online">● Online</span></p>
-      <p style="margin-top: 4px;">Version: 1.12.2</p>
-    </div>
-  </aside>
-
-  <!-- Main Content Area -->
-  <main class="main-content">
-    
-    <!-- Play View -->
-    <section id="play-view" class="tab-content active">
-      <div class="game-container">
-        <div class="placeholder-overlay">
-          <div class="hero-text">
-            <h1>FROZEN MC</h1>
-            <p>Select your preferred client version below and hit <strong>PLAY</strong> to launch into web-Minecraft in a new tab.</p>
-          </div>
+      <!-- Hero View with Logo Overlay -->
+      <div class="hero-container">
+        <div class="logo-container">
+          <!-- Insert the FrozenMC Logo -->
+          <img src="frozenmc-logo.png" alt="FrozenMC Logo">
         </div>
       </div>
 
-      <!-- Bottom Launcher Bar -->
-      <footer class="launcher-controls">
-        <div class="control-group">
-          <label for="client-select">SELECT CLIENT VERSION</label>
-          <select id="client-select">
-            <option value="">Loading client list...</option>
-          </select>
+      <!-- Play Control Bar -->
+      <div class="play-bar">
+        <!-- Version Selector Box -->
+        <div class="version-selector">
+          <div class="version-title">FrozenMC 1.21</div>
+          <div class="version-sub">Latest release</div>
         </div>
 
-        <button id="play-btn" class="btn-play">PLAY</button>
+        <!-- Green Play Button -->
+        <button class="play-btn">PLAY</button>
 
+        <!-- Extra Info Slot -->
         <div class="version-info">
-          <span>Ready to Launch</span>
-          <span class="badge-ready">● 1.12.2 Active</span>
-        </div>
-      </footer>
-    </section>
-
-    <!-- Servers View -->
-    <section id="servers-view" class="tab-content">
-      <div class="card">
-        <h2>FrozenMC Network</h2>
-        <p>Connect using your web client with these server addresses:</p>
-
-        <div style="margin-top: 18px;">
-          <label style="color: var(--ice-blue); font-weight: bold; font-size: 11px; letter-spacing: 1px;">EAGLERCRAFT WEB SOCKET IP</label>
-          <div>
-            <span class="ip-box">wss://eagler.frozenmc.org</span>
-          </div>
-        </div>
-
-        <div style="margin-top: 18px;">
-          <label style="color: var(--ice-blue); font-weight: bold; font-size: 11px; letter-spacing: 1px;">JAVA EDITION IP</label>
-          <div>
-            <span class="ip-box">play.frozenmc.org</span>
-          </div>
+          v1.0.0-Frozen
         </div>
       </div>
-    </section>
+    </div>
+  </div>
 
-    <!-- Settings View -->
-    <section id="settings-view" class="tab-content">
-      <div class="card">
-        <h2>Launcher Settings</h2>
-        <p>Customize your experience below.</p>
-
-        <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px;">
-          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--text-primary); font-size: 14px;">
-            <input type="checkbox" id="auto-fullscreen" style="width: 18px; height: 18px; accent-color: var(--ice-blue);">
-            Auto Fullscreen on Launch
-          </label>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <script src="script.js"></script>
 </body>
 </html>
