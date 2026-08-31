@@ -1,7 +1,7 @@
 :root {
   --bg-deep: #050b14;
   --bg-panel: rgba(8, 20, 38, 0.75);
-  --bg-panel-solid: rgba(6, 15, 28, 0.92);
+  --bg-panel-solid: rgba(6, 15, 28, 0.95);
   --ice-blue: #00b4d8;
   --ice-glow: #90e0ef;
   --ice-border: rgba(144, 224, 239, 0.3);
@@ -20,20 +20,24 @@
   user-select: none;
 }
 
+html, body {
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+}
+
 body {
   /* Ice landscape background with a subtle dark frost overlay */
   background: linear-gradient(rgba(5, 11, 20, 0.45), rgba(2, 5, 10, 0.75)),
               url('bg.jpg') no-repeat center center fixed;
   background-size: cover;
   color: var(--text-primary);
-  height: 100vh;
   display: flex;
-  overflow: hidden;
 }
 
-/* Sidebar - Left Navigation */
+/* Sidebar Navigation */
 .sidebar {
-  width: 270px;
+  width: 240px;
   background: var(--bg-panel);
   border-right: 1px solid var(--ice-border);
   display: flex;
@@ -42,23 +46,24 @@ body {
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 5px 0 25px rgba(0, 0, 0, 0.6);
   z-index: 10;
+  flex-shrink: 0;
 }
 
 .brand {
-  padding: 24px;
+  padding: 20px 16px;
   text-align: center;
   border-bottom: 1px solid var(--ice-border);
 }
 
 .brand h2 {
-  font-size: 22px;
-  letter-spacing: 1.5px;
+  font-size: 20px;
+  letter-spacing: 1.2px;
   text-shadow: 0 0 10px var(--ice-glow);
   color: #ffffff;
 }
 
 .brand p {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--ice-blue);
   text-transform: uppercase;
   margin-top: 4px;
@@ -68,7 +73,7 @@ body {
 .nav-menu {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 15px;
   gap: 4px;
 }
 
@@ -76,9 +81,9 @@ body {
   background: transparent;
   border: none;
   color: var(--text-muted);
-  padding: 14px 24px;
+  padding: 12px 20px;
   text-align: left;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
   border-left: 4px solid transparent;
   transition: all 0.2s ease;
@@ -100,9 +105,9 @@ body {
 
 .sidebar-footer {
   margin-top: auto;
-  padding: 20px;
+  padding: 16px;
   border-top: 1px solid var(--ice-border);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-muted);
 }
 
@@ -117,12 +122,15 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 .tab-content {
   display: none;
-  height: 100%;
+  flex: 1;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .tab-content.active {
@@ -136,21 +144,23 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .placeholder-overlay {
-  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .hero-text {
   text-align: center;
-  max-width: 580px;
+  max-width: 500px;
+  width: 90%;
   background: var(--bg-panel);
   border: 1px solid var(--ice-border);
-  padding: 36px;
+  padding: 28px 24px;
   border-radius: 12px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -158,48 +168,44 @@ body {
 }
 
 .hero-text h1 {
-  font-size: 40px;
+  font-size: 32px;
   text-shadow: 0 0 15px var(--ice-glow);
-  margin-bottom: 12px;
-  letter-spacing: 2px;
+  margin-bottom: 10px;
+  letter-spacing: 1.5px;
   color: #fff;
 }
 
 .hero-text p {
   color: var(--text-muted);
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-#game-frame {
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 /* Bottom Launcher Control Bar */
 .launcher-controls {
-  height: 95px;
+  min-height: 90px;
   background: var(--bg-panel-solid);
   border-top: 1px solid var(--ice-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 36px;
+  padding: 12px 24px;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.6);
+  z-index: 20;
+  gap: 15px;
+  flex-shrink: 0;
 }
 
 .control-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .control-group label {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: bold;
   color: var(--ice-blue);
   letter-spacing: 1px;
@@ -209,11 +215,11 @@ select {
   background: rgba(13, 27, 42, 0.9);
   color: #fff;
   border: 1px solid var(--ice-border);
-  padding: 12px 18px;
+  padding: 10px 14px;
   border-radius: 6px;
   outline: none;
   font-size: 14px;
-  min-width: 260px;
+  min-width: 220px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -232,14 +238,15 @@ select:focus {
   background: linear-gradient(180deg, var(--btn-green-top) 0%, var(--btn-green-bottom) 100%);
   color: #fff;
   border: 1px solid #4caf50;
-  padding: 14px 68px;
-  font-size: 22px;
+  padding: 12px 48px;
+  font-size: 20px;
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
   letter-spacing: 1.5px;
   box-shadow: 0 4px 20px rgba(46, 125, 50, 0.5);
   transition: all 0.15s ease;
+  white-space: nowrap;
 }
 
 .btn-play:hover {
@@ -257,7 +264,7 @@ select:focus {
   flex-direction: column;
   align-items: flex-end;
   gap: 4px;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .badge-ready {
@@ -269,8 +276,8 @@ select:focus {
 .card {
   background: var(--bg-panel);
   border: 1px solid var(--ice-border);
-  padding: 28px;
-  margin: 40px;
+  padding: 24px;
+  margin: 24px;
   border-radius: 10px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -279,7 +286,7 @@ select:focus {
 }
 
 .card h2 {
-  font-size: 24px;
+  font-size: 22px;
   margin-bottom: 8px;
   color: #fff;
   text-shadow: 0 0 10px var(--ice-blue);
@@ -292,12 +299,89 @@ select:focus {
 
 .ip-box {
   background: rgba(0, 0, 0, 0.7);
-  padding: 12px 18px;
+  padding: 10px 14px;
   border-radius: 6px;
   margin-top: 8px;
   display: inline-block;
   border: 1px solid var(--ice-border);
   color: var(--ice-glow);
   font-family: monospace;
-  font-size: 15px;
+  font-size: 14px;
+  word-break: break-all;
+}
+
+/* Responsive Mobile Layout Adjustments */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--ice-border);
+  }
+
+  .brand {
+    padding: 12px;
+  }
+
+  .brand h2 {
+    font-size: 18px;
+  }
+
+  .nav-menu {
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 0;
+  }
+
+  .nav-btn {
+    padding: 10px 16px;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+  }
+
+  .nav-btn.active {
+    border-left-color: transparent;
+    border-bottom-color: var(--ice-glow);
+  }
+
+  .sidebar-footer {
+    display: none;
+  }
+
+  .hero-text {
+    padding: 20px;
+  }
+
+  .hero-text h1 {
+    font-size: 24px;
+  }
+
+  .hero-text p {
+    font-size: 13px;
+  }
+
+  .launcher-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 12px;
+    gap: 10px;
+  }
+
+  select {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .btn-play {
+    width: 100%;
+    padding: 12px 0;
+  }
+
+  .version-info {
+    align-items: center;
+    width: 100%;
+  }
 }
