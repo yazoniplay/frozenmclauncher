@@ -117,7 +117,7 @@
       border-bottom: 2px solid #09add3;
     }
 
-    /* Hero Banner with bg.jpg */
+    /* Hero Banner using bg.jpg */
     .hero-container {
       flex: 1;
       position: relative;
@@ -254,10 +254,9 @@
       <div class="play-bar">
         <!-- Client Selector Dropdown -->
         <div class="client-selector-box">
-          <span class="client-label">Select Web Client:</span>
+          <span class="client-label">Select Client:</span>
           <select id="clientSelect" class="client-select">
-            <option value="tuff">TuffClient</option>
-            <option value="pixel">Pixel Client</option>
+            <option value="">Loading clients...</option>
           </select>
         </div>
 
@@ -272,17 +271,43 @@
   </div>
 
   <script>
-    function launchGame() {
-      const selectedClient = document.getElementById('clientSelect').value;
-      
-      if (selectedClient === 'tuff') {
-        // Point to your TuffClient HTML file or path
-        window.location.href = 'tuffclient.html';
-      } else if (selectedClient === 'pixel') {
-        // Point to your Pixel Client HTML file or path
-        window.location.href = 'pixelclient.html';
+    let clientsData = [];
+
+    // Fetch clients directly from clients.json
+    async function loadClients() {
+      try {
+        const response = await fetch('clients.json');
+        clientsData = await response.json();
+        
+        const select = document.getElementById('clientSelect');
+        select.innerHTML = '';
+
+        clientsData.forEach((client, index) => {
+          const option = document.createElement('option');
+          option.value = index;
+          option.textContent = client.name || client.title || `Client ${index + 1}`;
+          select.appendChild(option);
+        });
+      } catch (err) {
+        console.error('Failed to load clients.json:', err);
+        document.getElementById('clientSelect').innerHTML = '<option value="">Error loading clients</option>';
       }
     }
+
+    function launchGame() {
+      const selectedIndex = document.getElementById('clientSelect').value;
+      if (selectedIndex === '' || !clientsData[selectedIndex]) return;
+
+      const client = clientsData[selectedIndex];
+      // Redirects using the 'url', 'path', or 'link' key from your json object
+      const targetUrl = client.url || client.path || client.link;
+      if (targetUrl) {
+        window.location.href = targetUrl;
+      }
+    }
+
+    // Initialize on page load
+    loadClients();
   </script>
 
 </body>
