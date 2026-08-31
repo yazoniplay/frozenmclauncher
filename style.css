@@ -1,11 +1,13 @@
 :root {
   --bg-deep: #050b14;
-  --bg-panel: rgba(10, 22, 40, 0.85);
+  --bg-panel: rgba(8, 20, 38, 0.75);
+  --bg-panel-solid: rgba(6, 15, 28, 0.92);
   --ice-blue: #00b4d8;
   --ice-glow: #90e0ef;
-  --ice-border: rgba(144, 224, 239, 0.25);
+  --ice-border: rgba(144, 224, 239, 0.3);
+  --ice-border-hover: rgba(144, 224, 239, 0.6);
   --text-primary: #f0f8ff;
-  --text-muted: #8a99ad;
+  --text-muted: #a0aec0;
   --btn-green-top: #388e3c;
   --btn-green-bottom: #1b5e20;
 }
@@ -19,24 +21,26 @@
 }
 
 body {
-  background-color: var(--bg-deep);
-  background-image: 
-    radial-gradient(circle at 50% 0%, rgba(0, 180, 216, 0.15), transparent 70%),
-    linear-gradient(180deg, rgba(5, 11, 20, 0.95), rgba(2, 5, 10, 0.98));
+  /* Ice landscape background with a subtle dark frost overlay */
+  background: linear-gradient(rgba(5, 11, 20, 0.45), rgba(2, 5, 10, 0.75)),
+              url('bg.jpg') no-repeat center center fixed;
+  background-size: cover;
   color: var(--text-primary);
   height: 100vh;
   display: flex;
   overflow: hidden;
 }
 
-/* Sidebar */
+/* Sidebar - Left Navigation */
 .sidebar {
-  width: 260px;
+  width: 270px;
   background: var(--bg-panel);
   border-right: 1px solid var(--ice-border);
   display: flex;
   flex-direction: column;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 5px 0 25px rgba(0, 0, 0, 0.6);
   z-index: 10;
 }
 
@@ -47,10 +51,10 @@ body {
 }
 
 .brand h2 {
-  font-size: 20px;
-  letter-spacing: 1px;
-  text-shadow: 0 0 8px var(--ice-glow);
-  color: #fff;
+  font-size: 22px;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 10px var(--ice-glow);
+  color: #ffffff;
 }
 
 .brand p {
@@ -58,6 +62,7 @@ body {
   color: var(--ice-blue);
   text-transform: uppercase;
   margin-top: 4px;
+  letter-spacing: 0.8px;
 }
 
 .nav-menu {
@@ -80,15 +85,17 @@ body {
 }
 
 .nav-btn:hover {
-  background: rgba(0, 180, 216, 0.1);
+  background: rgba(0, 180, 216, 0.12);
   color: #fff;
+  border-left-color: var(--ice-border);
 }
 
 .nav-btn.active {
-  background: rgba(0, 180, 216, 0.18);
+  background: rgba(0, 180, 216, 0.22);
   color: #fff;
   border-left-color: var(--ice-glow);
   font-weight: 600;
+  text-shadow: 0 0 8px rgba(144, 224, 239, 0.5);
 }
 
 .sidebar-footer {
@@ -104,7 +111,7 @@ body {
   font-weight: bold;
 }
 
-/* Main Area */
+/* Main Display Area */
 .main-content {
   flex: 1;
   display: flex;
@@ -122,38 +129,46 @@ body {
   display: flex;
 }
 
-/* Game Frame */
+/* Hero Center Banner */
 .game-container {
   flex: 1;
   position: relative;
-  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .placeholder-overlay {
-  position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle, rgba(13, 27, 42, 0.8) 0%, rgba(5, 11, 20, 0.95) 100%);
-  z-index: 2;
 }
 
 .hero-text {
   text-align: center;
-  max-width: 500px;
+  max-width: 580px;
+  background: var(--bg-panel);
+  border: 1px solid var(--ice-border);
+  padding: 36px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .hero-text h1 {
-  font-size: 36px;
+  font-size: 40px;
   text-shadow: 0 0 15px var(--ice-glow);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+  color: #fff;
 }
 
 .hero-text p {
   color: var(--text-muted);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 #game-frame {
@@ -163,15 +178,18 @@ body {
   display: block;
 }
 
-/* Bottom Controls */
+/* Bottom Launcher Control Bar */
 .launcher-controls {
-  height: 90px;
-  background: rgba(6, 14, 26, 0.95);
+  height: 95px;
+  background: var(--bg-panel-solid);
   border-top: 1px solid var(--ice-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 32px;
+  padding: 0 36px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.6);
 }
 
 .control-group {
@@ -184,43 +202,50 @@ body {
   font-size: 11px;
   font-weight: bold;
   color: var(--ice-blue);
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
 }
 
 select {
-  background: #0d1b2a;
+  background: rgba(13, 27, 42, 0.9);
   color: #fff;
   border: 1px solid var(--ice-border);
-  padding: 10px 16px;
-  border-radius: 4px;
+  padding: 12px 18px;
+  border-radius: 6px;
   outline: none;
   font-size: 14px;
-  min-width: 240px;
+  min-width: 260px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+select:hover {
+  border-color: var(--ice-border-hover);
 }
 
 select:focus {
   border-color: var(--ice-glow);
-  box-shadow: 0 0 8px var(--ice-border);
+  box-shadow: 0 0 10px var(--ice-border);
 }
 
+/* Big Green Play Button */
 .btn-play {
   background: linear-gradient(180deg, var(--btn-green-top) 0%, var(--btn-green-bottom) 100%);
   color: #fff;
   border: 1px solid #4caf50;
-  padding: 14px 64px;
+  padding: 14px 68px;
   font-size: 22px;
   font-weight: bold;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  letter-spacing: 1px;
-  box-shadow: 0 4px 15px rgba(46, 125, 50, 0.4);
+  letter-spacing: 1.5px;
+  box-shadow: 0 4px 20px rgba(46, 125, 50, 0.5);
   transition: all 0.15s ease;
 }
 
 .btn-play:hover {
   filter: brightness(1.15);
   transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(76, 175, 80, 0.6);
 }
 
 .btn-play:active {
@@ -232,7 +257,7 @@ select:focus {
   flex-direction: column;
   align-items: flex-end;
   gap: 4px;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .badge-ready {
@@ -240,21 +265,39 @@ select:focus {
   font-weight: bold;
 }
 
-/* Extra Views */
+/* Card Views (Servers & Settings) */
 .card {
   background: var(--bg-panel);
   border: 1px solid var(--ice-border);
-  padding: 24px;
-  margin: 30px;
-  border-radius: 8px;
+  padding: 28px;
+  margin: 40px;
+  border-radius: 10px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  max-width: 600px;
+}
+
+.card h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #fff;
+  text-shadow: 0 0 10px var(--ice-blue);
+}
+
+.card p {
+  color: var(--text-muted);
+  font-size: 14px;
 }
 
 .ip-box {
-  background: #000;
+  background: rgba(0, 0, 0, 0.7);
   padding: 12px 18px;
-  border-radius: 4px;
-  margin-top: 12px;
+  border-radius: 6px;
+  margin-top: 8px;
   display: inline-block;
   border: 1px solid var(--ice-border);
   color: var(--ice-glow);
+  font-family: monospace;
+  font-size: 15px;
 }
